@@ -1,75 +1,66 @@
 from Player import Player
+import numbers
+
 class Batter(Player):
 
-    # Instance Variables
-    gamesPlayed = 0
-    atBats = 0
-    hits = 0
-    doubles = 0
-    triples = 0
-    homeRuns = 0
-    walks = 0
-    runs = 0
-    rbis = 0
-    battingAverage = 0.0
-    strikeouts = 0
-    stolenBases = 0 
-    slg = 0.0
-    onBasePercentage = 0.0
-    ops = 0.0
-
-
-    # Secondary Constructor
-    def __init__(self, age, fn, ln, teamName, teamAbrv, location, positions, player_id):
-        super().__init__(age, fn, ln, teamName, teamAbrv, location, positions, player_id)
-    
-    # passes player data and batter data as kwargs
-    def __init__(self, age, fn, ln, teamName, teamAbrv, location, positions, player_id, **batterData):
-        self.__init__(age, fn, ln, teamName. teamAbrv, location, positions, player_id)
-        self.gamesPlayed = batterData['gamesPlayed']
-        self.atBats = batterData['atBats']
-        self.hits = batterData['hits']
-        self.doubles = batterData['doubles']
-        self.triples = batterData['triples']
-        self.homeRuns = batterData['homeRuns']
-        self.runs = batterData['runs']
-        self.rbis = batterData['rbis']
-        self.walks = batterData['walks']
-        self.battingAverage = batterData['battingAverage']
-        self.strikeouts = batterData['strikeouts']
-        self.stolenBases = batterData['stolenBases']
-        self.slg = batterData['slg']
-        self.onBasePercentage = batterData['onBasePercentage']
-        self.ops = batterData['ops']
-
     def __init__(self, **batterData):
-        self.age = batterData['age']
-        self.firstName = batterData['firstName']
-        self.lastName = batterData['lastName']
-        self.teamName = batterData['teamName']
-        self.teamAbrv = batterData['teamAbrv']
-        self.location = batterData['location']
-        self.positions = batterData['positions']
-        self.player_id = batterData['player_id']
-        self.gamesPlayed = batterData['gamesPlayed']
-        self.atBats = batterData['atBats']
-        self.hits = batterData['hits']
-        self.doubles = batterData['doubles']
-        self.triples = batterData['triples']
-        self.homeRuns = batterData['homeRuns']
-        self.runs = batterData['runs']
-        self.rbis = batterData['rbis']
-        self.walks = batterData['walks']
-        self.battingAverage = batterData['battingAverage']
-        self.strikeouts = batterData['strikeouts']
-        self.stolenBases = batterData['stolenBases']
-        self.slg = batterData['slg']
-        self.onBasePercentage = batterData['onBasePercentage']
-        self.ops = batterData['ops']
+        stats_included = self.getIncludedStats(**batterData)
+        self.stats_missing = self.getMissingStats(**batterData)
+        for stat in stats_included:
+            setattr(self, stat, batterData[stat])
+        for stat in self.stats_missing:
+            setattr(self, stat, None)
 
-    # get the number of singles a player has gotten from his other stats
-    def getSingles():
-        if hits <= 0:
-            return 0
-        else:
-            return this.hits - this.doubles - this.triples - this.homeRuns
+    def getMissingStats(self, **batterData):
+        all_stats = [
+            "age", "firstName", "lastName", "team_full",
+            "team_abbrev", "player_id", "position",
+            "g", "ab", "h", "r", "rbi", "hr", "bb", "so",
+            "sb", "avg", "slg", "obp", "ops", "year", 
+            "gidp", "sac", "np", "tb", "gidp_opp", "hbp",
+            "wo", "sf", "cs", "go_ao", "ppa", "ibb", "roe",
+            "go", "babip", "lob", "xbh", "d", "tpa", "t", "ao"]
+        stats_missing = batterData.keys()
+        return list(set(all_stats) - set(stats_missing))
+
+    def getIncludedStats(self, **batterData):
+        all_stats = [
+            "age", "firstName", "lastName", "team_full",
+            "team_abbrev", "player_id", "position",
+            "g", "ab", "h", "r", "rbi", "hr", "bb", "so",
+            "sb", "avg", "slg", "obp", "ops", "year", 
+            "gidp", "sac", "np", "tb", "gidp_opp", "hbp",
+            "wo", "sf", "cs", "go_ao", "ppa", "ibb", "roe",
+            "go", "babip", "lob", "xbh", "d", "tpa", "t", "ao"]
+        stats_included = batterData.keys()
+        return list(set(all_stats).intersection(stats_included))
+
+    def __str__(self):
+        return(self.firstName + " " + self.lastName + " " + str(self.age) + " " + self.player_id + " " + self.year)
+
+    def toDBString(self):
+        dbString = "("
+        attrs = ["age", "firstName", "lastName", "team_full",
+            "team_abbrev", "player_id", "position",
+            "g", "ab", "h", "r", "rbi", "hr", "bb", "so",
+            "sb", "avg", "slg", "obp", "ops", "year", 
+            "gidp", "sac", "np", "tb", "gidp_opp", "hbp",
+            "wo", "sf", "cs", "go_ao", "ppa", "ibb", "roe",
+            "go", "babip", "lob", "xbh", "d", "tpa", "t", "ao"]
+        strings = ["firstName", "lastName", "team_full",
+            "team_abbrev", "player_id", "position", "year"]
+        for stat in attrs:
+            attr = getattr(self, stat)
+            if stat in strings:
+                if "'" in attr:
+                    attr = attr.replace("'", "''")
+                    print(attr)
+                dbString += "'" + attr + "',"
+            else:
+                if not isinstance(attr, numbers.Number):
+                    dbString += "NULL,"
+                    continue
+            
+                dbString += str(attr) + ","
+        dbString = dbString[:-1] + ')'
+        return dbString

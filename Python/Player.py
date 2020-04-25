@@ -32,6 +32,10 @@ class Player:
         self.positions = playerData['positions']
         self.player_id = playerData['player_id']
 
+    def __eq__(self, other):
+        if self.player_id == other.player_id:
+            return True
+
     def getPrimaryPosition(): 
         return self.positions[0]
 

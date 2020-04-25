@@ -1,68 +1,1055 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# BaseballAnalysis
+This project is written by William Moskal, based on a personal hobby of statistics and fantasy sports. I wanted to build this project to gain some more practical experience with Java, work with an API in Java (MLB DATA API) and eventually to build a website where the analysis can be viewed by anyone.
 
-## Available Scripts
 
-In the project directory, you can run:
+For the MLB Data API,
+The URL http://lookup-service-prod.mlb.com/json/named.roster_40.bam?team_id='{team_id}' returns the 40 man roster for the team with id team_id.
 
-### `npm start`
+The teams are located at the Following IDs:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+108: Los Angeles Angels
+109: Arizona Diamondbacks
+110: Baltimore Orioles
+111: Boston Red Sox
+112: Chicago Cubs
+113: Cincinnati Reds
+114: Cleveland Indians
+115: Colorado Rockies
+116: Detroit Tigers
+117: Houston Astros
+118: Kansas City Royals
+119: Los Angeles Dodgers
+120: Washington Nationals
+121: New York Mets
+133: Oakland Athletics
+134: Pittsburgh Pirates
+135: San Diego Padres
+136: Seattle Mariners
+137: San Francisco Giants
+138: St. Louis Cardinals
+139: Tampa Bay Rays
+140: Texas Rangers
+141: Toronto Blue Jays
+142: Minnesota Twins
+143: Philadelphia Phillies
+144: Atlanta Braves
+145: Chicago White Sox
+146: Miami Marlins
+147: New York Yankees
+158: Milwaukee Brewers
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The Players on a 40 man roster, and their IDs:
+Andrew Knapp - PHI - 595284
+Mauricio Llovera - PHI - 661440
+Reggie McClain - PHI - 596035
+Andrew McCutchen - PHI - 457705
+Adonis Medina - PHI - 658431
+Adam Morgan - PHI - 605388
+Hector Neris - PHI - 593576
+Aaron Nola - PHI - 605400
+Nick Pivetta - PHI - 601713
+Roman Quinn - PHI - 596451
+J.T. Realmuto - PHI - 592663
+JoJo Romero - PHI - 668941
+Cristopher Sanchez - PHI - 650911
+Jean Segura - PHI - 516416
+Robert Stock - PHI - 476594
+Ranger Suarez - PHI - 624133
+Vince Velasquez - PHI - 592826
+Zack Wheeler - PHI - 554430
+Nick Williams - PHI - 608384
+Michel Baez - SD - 673258
+David Bednar - SD - 670280
+Ronald Bolanos - SD - 671790
+Jose Castillo - SD - 620454
+Franchy Cordero - SD - 614173
+Jake Cronenworth - SD - 630105
+Zach Davies - SD - 605200
+Ty France - SD - 664034
+Greg Garcia - SD - 594824
+Trent Grisham - SD - 663757
+Javy Guerra - SD - 642770
+Austin Hedges - SD - 595978
+Eric Hosmer - SD - 543333
+Pierce Johnson - SD - 572955
+Dinelson Lamet - SD - 659275
+Joey Lucchesi - SD - 664192
+Manny Machado - SD - 592518
+Francisco Mejia - SD - 642336
+Adrian Morejon - SD - 670970
+Andres Munoz - SD - 662253
+Wil Myers - SD - 571976
+Josh Naylor - SD - 647304
+Edward Olivares - SD - 658668
+Jorge Ona - SD - 671250
+Chris Paddack - SD - 663978
+Emilio Pagan - SD - 641941
+Luis Perdomo - SD - 606131
+Tommy Pham - SD - 502054
+Drew Pomeranz - SD - 519141
+Jurickson Profar - SD - 595777
+Cal Quantrill - SD - 615698
+Gerardo Reyes - SD - 622103
+Garrett Richards - SD - 572070
+Craig Stammen - SD - 489334
+Matt Strahm - SD - 621381
+Fernando Tatis Jr. - SD - 665487
+Luis Torrens - SD - 620443
+Breyvic Valera - SD - 591971
+Trey Wingenter - SD - 622259
+Kirby Yates - SD - 489446
+Melvin Adon - SF - 661536
+Shaun Anderson - SF - 641312
+Tyler Anderson - SF - 542881
+Abiatal Avelino - SF - 623214
+Tyler Beede - SF - 595881
+Brandon Belt - SF - 474832
+Sam Coonrod - SF - 656322
+Brandon Crawford - SF - 543063
+Johnny Cueto - SF - 456501
+Jaylin Davis - SF - 664041
+Alex Dickerson - SF - 543105
+Mauricio Dubon - SF - 643289
+Steven Duggar - SF - 621453
+Wilmer Flores - SF - 527038
+Enderson Franco - SF - 575070
+Jarlin Garcia - SF - 606424
+Kevin Gausman - SF - 592332
+Trevor Gott - SF - 641627
+Jandel Gustave - SF - 594311
+Dany Jimenez - SF - 666204
+Evan Longoria - SF - 446334
+Joe McCarthy - SF - 663411
+Conner Menez - SF - 669214
+Hunter Pence - SF - 452254
+Wandy Peralta - SF - 593974
+Buster Posey - SF - 457763
+Dereck Rodriguez - SF - 605446
+Tyler Rogers - SF - 643511
+Jeff Samardzija - SF - 502188
+Sam Selman - SF - 572125
+Chris Shaw - SF - 622046
+Jose Siri - SF - 642350
+Austin Slater - SF - 596103
+Drew Smyly - SF - 592767
+Donovan Solano - SF - 456781
+Andrew Suarez - SF - 605498
+Tony Watson - SF - 453265
+Logan Webb - SF - 657277
+Kean Wong - SF - 642221
+Mike Yastrzemski - SF - 573262
+Chance Adams - KC - 664856
+Scott Barlow - KC - 605130
+Scott Blewett - KC - 656240
+Hunter Dozier - KC - 641531
+Danny Duffy - KC - 518633
+Maikel Franco - KC - 596748
+Cam Gallagher - KC - 595956
+Alex Gordon - KC - 460086
+Foster Griffin - KC - 656492
+Kelvin Gutierrez - KC - 642721
+Jeison Guzman - KC - 665834
+Jesse Hahn - KC - 534910
+Nick Heath - KC - 670084
+Carlos Hernandez - KC - 672578
+Tim Hill - KC - 657612
+Jakob Junis - KC - 596001
+Brad Keller - KC - 641745
+Ian Kennedy - KC - 453178
+Jorge Lopez - KC - 605347
+Nicky Lopez - KC - 670032
+Richard Lovelady - KC - 663992
+Ryan McBroom - KC - 643436
+Kevin McCarthy - KC - 641838
+Whit Merrifield - KC - 593160
+Adalberto Mondesi - KC - 609275
+Mike Montgomery - KC - 543557
+Jake Newberry - KC - 623470
+Ryan O'Hearn - KC - 656811
+Salvador Perez - KC - 521692
+Brett Phillips - KC - 621433
+Randy Rosario - KC - 600968
+Eric Skoglund - KC - 607215
+Jorge Soler - KC - 624585
+Glenn Sparkman - KC - 642098
+Gabe Speier - KC - 642100
+Bubba Starling - KC - 605490
+Josh Staumont - KC - 622251
+Meibrys Viloria - KC - 650619
+Stephen Woods Jr. - KC - 642225
+Kyle Zimmer - KC - 622092
+Jose Abreu - CWS - 547989
+Micker Adolfo - CWS - 650520
+Tim Anderson - CWS - 641313
+Luis Alexander Basabe - CWS - 642772
+Aaron Bummer - CWS - 607481
+Zack Burdi - CWS - 641420
+Dylan Cease - CWS - 656302
+Steve Cishek - CWS - 518553
+Zack Collins - CWS - 641470
+Alex Colome - CWS - 517008
+Jimmy Cordero - CWS - 622772
+Dane Dunning - CWS - 641540
+Edwin Encarnacion - CWS - 429665
+Adam Engel - CWS - 641553
+Bernardo Flores - CWS - 641576
+Matt Foster - CWS - 641582
+Jace Fry - CWS - 605240
+Carson Fulmer - CWS - 608334
+Leury Garcia - CWS - 544725
+Lucas Giolito - CWS - 608337
+Gio Gonzalez - CWS - 461829
+Yasmani Grandal - CWS - 518735
+Ian Hamilton - CWS - 641656
+Kelvin Herrera - CWS - 516969
+Eloy Jimenez - CWS - 650391
+Dallas Keuchel - CWS - 572971
+Michael Kopech - CWS - 656629
+Jimmy Lambert - CWS - 669424
+Reynaldo Lopez - CWS - 625643
+Evan Marshall - CWS - 605359
+Nomar Mazara - CWS - 608577
+James McCann - CWS - 543510
+Danny Mendick - CWS - 664901
+Yermin Mercedes - CWS - 606213
+Yoan Moncada - CWS - 660162
+Luis Robert - CWS - 673357
+Carlos Rodon - CWS - 607074
+Jose Ruiz - CWS - 614179
+Blake Rutherford - CWS - 666164
+Seby Zavala - CWS - 664874
+Yency Almonte - COL - 622075
+Nolan Arenado - COL - 571448
+Charlie Blackmon - COL - 453568
+Ben Bowden - COL - 641386
+Ryan Castellani - COL - 624418
+David Dahl - COL - 621311
+Wade Davis - COL - 451584
+Yonathan Daza - COL - 602074
+Ian Desmond - COL - 435622
+Jairo Diaz - COL - 545064
+Phillip Diehl - COL - 670426
+Carlos Estevez - COL - 608032
+Kyle Freeland - COL - 607536
+Josh Fuentes - COL - 658069
+Chi Chi Gonzalez - COL - 592346
+Ashton Goudeau - COL - 623485
+Jon Gray - COL - 592351
+Garrett Hampson - COL - 641658
+Sam Hilliard - COL - 656541
+Jeff Hoffman - COL - 656546
+Tyler Kinley - COL - 641755
+Peter Lambert - COL - 663567
+German Marquez - COL - 608566
+Jake McGee - COL - 459429
+Ryan McMahon - COL - 641857
+Jose Mujica - COL - 620445
+Daniel Murphy - COL - 502517
+Tyler Nevin - COL - 663527
+Dom Nunez - COL - 624513
+Scott Oberg - COL - 623184
+James Pazos - COL - 572021
+Brendan Rodgers - COL - 663898
+Antonio Santos - COL - 665733
+Antonio Senzatela - COL - 622608
+Bryan Shaw - COL - 543766
+Trevor Story - COL - 596115
+Raimel Tapia - COL - 606132
+Jesus Tinoco - COL - 622786
+Tony Wolters - COL - 547172
+Pete Alonso - NYM - 624413
+Tyler Bashlor - NYM - 641341
+Dellin Betances - NYM - 476454
+Brad Brach - NYM - 542960
+Robinson Cano - NYM - 429664
+Yoenis Cespedes - NYM - 493316
+Michael Conforto - NYM - 624424
+J.D. Davis - NYM - 605204
+Jacob deGrom - NYM - 594798
+Edwin Diaz - NYM - 621242
+Jeurys Familia - NYM - 544727
+Andres Gimenez - NYM - 665926
+Stephen Gonsalves - NYM - 624427
+Robert Gsellman - NYM - 607229
+Luis Guillorme - NYM - 641645
+Jordan Humphreys - NYM - 664990
+Franklyn Kilome - NYM - 642584
+Walker Lockett - NYM - 621141
+Jed Lowrie - NYM - 476704
+Seth Lugo - NYM - 607625
+Jake Marisnick - NYM - 545350
+Steven Matz - NYM - 571927
+Jeff McNeil - NYM - 643446
+Tomas Nido - NYM - 621512
+Brandon Nimmo - NYM - 607043
+Corey Oswalt - NYM - 621261
+Rick Porcello - NYM - 519144
+Wilson Ramos - NYM - 467092
+Jacob Rhame - NYM - 642008
+Amed Rosario - NYM - 642708
+Ali Sanchez - NYM - 645305
+Paul Sewald - NYM - 623149
+Dominic Smith - NYM - 642086
+Drew Smith - NYM - 622098
+Marcus Stroman - NYM - 573186
+Noah Syndergaard - NYM - 592789
+Michael Wacha - NYM - 608379
+Justin Wilson - NYM - 458677
+Daniel Zamora - NYM - 623354
+Jesus Aguilar - MIA - 542583
+Sandy Alcantara - MIA - 645261
+Jorge Alfaro - MIA - 595751
+Brian Anderson - MIA - 605119
+Jon Berti - MIA - 542932
+Jeff Brigham - MIA - 656257
+Lewis Brinson - MIA - 621446
+Edward Cabrera - MIA - 665795
+Francisco Cervelli - MIA - 465041
+Jazz Chisholm - MIA - 665862
+Adam Conley - MIA - 543045
+Garrett Cooper - MIA - 643265
+Isan Diaz - MIA - 656371
+Lewin Diaz - MIA - 650331
+Corey Dickerson - MIA - 572816
+Robert Dugger - MIA - 667498
+Yimi Garcia - MIA - 554340
+Jorge Guzman - MIA - 660422
+Monte Harrison - MIA - 656509
+Elieser Hernandez - MIA - 622694
+Jordan Holloway - MIA - 656548
+Matt Joyce - MIA - 459964
+Brandon Kintzler - MIA - 445213
+Pablo Lopez - MIA - 641154
+Humberto Mejia - MIA - 650668
+Nick Neidert - MIA - 663734
+Harold Ramirez - MIA - 623912
+Miguel Rojas - MIA - 500743
+Jesus Sanchez - MIA - 660821
+Sixto Sanchez - MIA - 664350
+Sterling Sharp - MIA - 643532
+Magneuris Sierra - MIA - 642423
+Caleb Smith - MIA - 592761
+Ryne Stanek - MIA - 592773
+Drew Steckenrider - MIA - 608716
+Stephen Tarpley - MIA - 605501
+Jose Urena - MIA - 570632
+Jonathan Villar - MIA - 542340
+Chad Wallach - MIA - 595453
+Jordan Yamamoto - MIA - 657141
+Jonathan Arauz - BOS - 660620
+Yoan Aybar - BOS - 646243
+Matt Barnes - BOS - 598264
+Andrew Benintendi - BOS - 643217
+Xander Bogaerts - BOS - 593428
+Jackie Bradley Jr. - BOS - 598265
+Ryan Brasier - BOS - 518489
+Colten Brewer - BOS - 605155
+Austin Brice - BOS - 592169
+C.J. Chatham - BOS - 641453
+Michael Chavis - BOS - 656308
+Bobby Dalbec - BOS - 666915
+Rafael Devers - BOS - 646240
+Nathan Eovaldi - BOS - 543135
+Matt Hall - BOS - 664180
+Kyle Hart - BOS - 606996
+Heath Hembree - BOS - 592390
+Darwinzon Hernandez - BOS - 650382
+Tzu-Wei Lin - BOS - 624407
+J.D. Martinez - BOS - 502110
+Chris Mazza - BOS - 607391
+Collin McHugh - BOS - 543521
+Mitch Moreland - BOS - 519048
+Josh Osich - BOS - 592612
+Jose Peraza - BOS - 606299
+Martin Perez - BOS - 527048
+Kevin Pillar - BOS - 607680
+Kevin Plawecki - BOS - 608700
+Eduardo Rodriguez - BOS - 593958
+Chris Sale - BOS - 519242
+Mike Shawaryn - BOS - 642067
+Jeffrey Springs - BOS - 605488
+Josh Taylor - BOS - 657031
+Phillips Valdez - BOS - 570488
+Christian Vazquez - BOS - 543877
+Alex Verdugo - BOS - 657077
+Marcus Walden - BOS - 519393
+Ryan Weber - BOS - 543901
+Marcus Wilson - BOS - 657129
+Brandon Workman - BOS - 519443
+Shogo Akiyama - CIN - 673451
+Tejay Antone - CIN - 622088
+Aristides Aquino - CIN - 606157
+Tucker Barnhart - CIN - 571466
+Trevor Bauer - CIN - 545333
+Alex Blandino - CIN - 607468
+Matt Bowman - CIN - 621199
+Curt Casali - CIN - 592200
+Nick Castellanos - CIN - 592206
+Luis Castillo - CIN - 622491
+Jose De Leon - CIN - 592254
+Anthony DeSclafani - CIN - 543101
+Phillip Ervin - CIN - 640447
+Kyle Farmer - CIN - 571657
+Freddy Galvis - CIN - 520471
+Amir Garrett - CIN - 607237
+Sonny Gray - CIN - 543243
+Ryan Hendrix - CIN - 641682
+Raisel Iglesias - CIN - 628452
+Travis Jankowski - CIN - 608671
+Joel Kuhnel - CIN - 669270
+Michael Lorenzen - CIN - 547179
+Tyler Mahle - CIN - 641816
+Wade Miley - CIN - 489119
+Mike Moustakas - CIN - 519058
+Mark Payton - CIN - 592622
+Cody Reed - CIN - 642003
+Tony Santillan - CIN - 663574
+Scott Schebler - CIN - 594988
+Nick Senzel - CIN - 669222
+Justin Shafer - CIN - 596101
+Lucas Sims - CIN - 608371
+Josh D. Smith - CIN - 605479
+Robert Stephenson - CIN - 596112
+Tyler Stephenson - CIN - 663886
+Pedro Strop - CIN - 467008
+Eugenio Suarez - CIN - 553993
+Josh VanMeter - CIN - 642165
+Joey Votto - CIN - 458015
+Jesse Winker - CIN - 608385
+Justin Anderson - LAA - 605121
+Matt Andriese - LAA - 542882
+Luke Bard - LAA - 572703
+Jaime Barria - LAA - 642545
+Cam Bedrosian - LAA - 592135
+Anthony Bemboom - LAA - 621532
+Dylan Bundy - LAA - 605164
+Ty Buttrey - LAA - 621142
+Griffin Canning - LAA - 656288
+Jason Castro - LAA - 488771
+Taylor Cole - LAA - 518566
+David Fletcher - LAA - 664058
+Brian Goodwin - LAA - 571718
+Andrew Heaney - LAA - 571760
+Michael Hermosillo - LAA - 641684
+Jahmai Jones - LAA - 663330
+Kyle Keller - LAA - 664918
+Tommy La Stella - LAA - 600303
+Mike Mayers - LAA - 594577
+Keynan Middleton - LAA - 641871
+Shohei Ohtani - LAA - 660271
+Felix Pena - LAA - 570240
+Dillon Peters - LAA - 596071
+Albert Pujols - LAA - 405395
+Jose Quijada - LAA - 650671
+Noe Ramirez - LAA - 598287
+Anthony Rendon - LAA - 543685
+Luis Rengifo - LAA - 650859
+Hansel Robles - LAA - 570663
+Patrick Sandoval - LAA - 663776
+Andrelton Simmons - LAA - 592743
+Max Stassi - LAA - 545358
+Jose Suarez - LAA - 660761
+Julio Teheran - LAA - 527054
+Matt Thaiss - LAA - 642136
+Mike Trout - LAA - 545361
+Justin Upton - LAA - 457708
+Jared Walsh - LAA - 665120
+Taylor Ward - LAA - 621493
+Hector Yan - LAA - 666668
+Keegan Akin - BAL - 669211
+Hanser Alberto - BAL - 593643
+Shawn Armstrong - BAL - 542888
+Richard Bleier - BAL - 542947
+Cody Carroll - BAL - 606944
+Miguel Castro - BAL - 612434
+Alex Cobb - BAL - 502171
+Chris Davis - BAL - 448801
+Paul Fry - BAL - 643316
+Mychal Givens - BAL - 571710
+Hunter Harvey - BAL - 640451
+Austin Hays - BAL - 669720
+David Hess - BAL - 605276
+Jose Iglesias - BAL - 578428
+Dean Kremer - BAL - 665152
+Travis Lakins - BAL - 664042
+Trey Mancini - BAL - 641820
+Richie Martin - BAL - 621006
+Ryan McKenna - BAL - 663630
+John Means - BAL - 607644
+Ryan Mountcastle - BAL - 663624
+Cedric Mullins - BAL - 656775
+Renato Nunez - BAL - 600524
+Evan Phillips - BAL - 623465
+Rio Ruiz - BAL - 547004
+Anthony Santander - BAL - 623993
+Tanner Scott - BAL - 656945
+Pedro Severino - BAL - 600474
+Chance Sisco - BAL - 642082
+Dwight Smith Jr - BAL - 596105
+DJ Stewart - BAL - 621466
+Kohl Stewart - BAL - 640464
+Cole Sulser - BAL - 642121
+Dillon Tate - BAL - 622253
+Ramon Urias - BAL - 602104
+Andrew Velazquez - BAL - 623205
+Hector Velazquez - BAL - 584171
+Asher Wojciechowski - BAL - 592879
+Austin Wynns - BAL - 642851
+Scott Alexander - LAD - 518397
+Pedro Baez - LAD - 520980
+Austin Barnes - LAD - 605131
+Matt Beaty - LAD - 607461
+Cody Bellinger - LAD - 641355
+Mookie Betts - LAD - 605141
+Walker Buehler - LAD - 621111
+Caleb Ferguson - LAD - 657571
+Dylan Floro - LAD - 571670
+Tony Gonsolin - LAD - 664062
+Victor Gonzalez - LAD - 624647
+Brusdar Graterol - LAD - 660813
+Enrique Hernandez - LAD - 571771
+Kenley Jansen - LAD - 445276
+Joe Kelly - LAD - 523260
+Clayton Kershaw - LAD - 477132
+Adam Kolarek - LAD - 592473
+Gavin Lux - LAD - 666158
+Dustin May - LAD - 669160
+Zach McKinstry - LAD - 656716
+Max Muncy - LAD - 571970
+Jimmy Nelson - LAD - 519076
+Joc Pederson - LAD - 592626
+DJ Peters - LAD - 656847
+A.J. Pollock - LAD - 572041
+David Price - LAD - 456034
+Luke Raley - LAD - 670042
+Edwin Rios - LAD - 621458
+Keibert Ruiz - LAD - 660688
+Dennis Santana - LAD - 642701
+Josh Sborz - LAD - 622250
+Corey Seager - LAD - 608369
+Will Smith - LAD - 669257
+Ross Stripling - LAD - 548389
+Chris Taylor - LAD - 621035
+Blake Treinen - LAD - 595014
+Justin Turner - LAD - 457759
+Julio Urias - LAD - 628711
+Mitchell White - LAD - 669952
+Alex Wood - LAD - 622072
+Dan Altavilla - SEA - 656186
+Gerson Bautista - SEA - 639373
+Braden Bishop - SEA - 623323
+Brandon Brennan - SEA - 592165
+Nestor Cortes - SEA - 641482
+J.P. Crawford - SEA - 641487
+Justin Dunn - SEA - 643290
+Carl Edwards Jr. - SEA - 605218
+Jake Fraley - SEA - 641584
+Marco Gonzales - SEA - 594835
+Dee Gordon - SEA - 543829
+Kendall Graveman - SEA - 608665
+Zac Grotz - SEA - 665093
+Taylor Guilbeau - SEA - 607555
+Sam Haggerty - SEA - 664059
+Mitch Haniger - SEA - 571745
+Yoshihisa Hirano - SEA - 673633
+Yusei Kikuchi - SEA - 579328
+Kyle Lewis - SEA - 641786
+Shed Long Jr. - SEA - 643418
+Tim Lopes - SEA - 621005
+Matt Magill - SEA - 543483
+Nick Margevicius - SEA - 676606
+Dylan Moore - SEA - 664238
+Tom Murphy - SEA - 608596
+Austin Nola - SEA - 543592
+Yohan Ramirez - SEA - 670990
+Kyle Seager - SEA - 572122
+Justus Sheffield - SEA - 656954
+Mallex Smith - SEA - 605480
+Erik Swanson - SEA - 657024
+Sam Tuivailala - SEA - 592815
+Daniel Vogelbach - SEA - 596129
+Taijuan Walker - SEA - 592836
+Donovan Walton - SEA - 622268
+Art Warren - SEA - 605521
+Evan White - SEA - 657108
+Taylor Williams - SEA - 592865
+Patrick Wisdom - SEA - 621550
+Willy Adames - TB - 642715
+Jose Alvarado - TB - 621237
+Nick Anderson - TB - 623433
+Randy Arozarena - TB - 668227
+Anthony Banda - TB - 607455
+Jalen Beeks - TB - 656222
+Michael Brosseau - TB - 670712
+Vidal Brujan - TB - 660644
+Diego Castillo - TB - 650895
+Yonny Chirinos - TB - 630023
+Ji-Man Choi - TB - 596847
+Yandy Diaz - TB - 650490
+Oliver Drake - TB - 543118
+Peter Fairbanks - TB - 664126
+Lucius Fox - TB - 665650
+Tyler Glasnow - TB - 607192
+Ronaldo Hernandez - TB - 660613
+Brent Honeywell Jr. - TB - 641703
+Kevin Kiermaier - TB - 595281
+Andrew Kittredge - TB - 552640
+Brandon Lowe - TB - 664040
+Nate Lowe - TB - 663993
+Manuel Margot - TB - 622534
+Jose Martinez - TB - 500874
+Brendan McKay - TB - 656713
+Austin Meadows - TB - 640457
+Charlie Morton - TB - 450203
+Brian O'Grady - TB - 657434
+Kevin Padlo - TB - 656821
+Michael Perez - TB - 605421
+Colin Poche - TB - 621363
+Hunter Renfroe - TB - 592669
+Trevor Richards - TB - 670950
+Daniel Robertson - TB - 621002
+Chaz Roe - TB - 475054
+Blake Snell - TB - 605483
+Yoshitomo Tsutsugo - TB - 660294
+Joey Wendle - TB - 621563
+Ryan Yarbrough - TB - 642232
+Mike Zunino - TB - 572287
+Bryan Abreu - HOU - 650556
+Jose Altuve - HOU - 514888
+Yordan Alvarez - HOU - 670541
+Rogelio Armenteros - HOU - 660494
+Joe Biagini - HOU - 607352
+Michael Brantley - HOU - 488726
+Alex Bregman - HOU - 608324
+Carlos Correa - HOU - 621043
+Chris Devenski - HOU - 606965
+Aledmys Diaz - HOU - 649557
+Kent Emanuel - HOU - 592288
+Dustin Garneau - HOU - 572863
+Zack Greinke - HOU - 425844
+Yuli Gurriel - HOU - 493329
+Josh James - HOU - 657624
+Cristian Javier - HOU - 664299
+Taylor Jones - HOU - 622100
+Martin Maldonado - HOU - 455117
+Jack Mayfield - HOU - 608686
+Lance McCullers Jr. - HOU - 621121
+Roberto Osuna - HOU - 532077
+Enoli Paredes - HOU - 660600
+Brad Peacock - HOU - 502748
+Cionel Perez - HOU - 672335
+Ryan Pressly - HOU - 519151
+Austin Pruitt - HOU - 643493
+Josh Reddick - HOU - 502210
+Nivaldo Rodriguez - HOU - 670550
+Joe Smith - HOU - 501925
+Cy Sneed - HOU - 605482
+George Springer - HOU - 543807
+Myles Straw - HOU - 664702
+Garrett Stubbs - HOU - 596117
+Blake Taylor - HOU - 642130
+Abraham Toro - HOU - 647351
+Kyle Tucker - HOU - 663656
+Jose Urquidy - HOU - 664353
+Framber Valdez - HOU - 664285
+Justin Verlander - HOU - 434378
+Albert Abreu - NYY - 656061
+Miguel Andujar - NYY - 609280
+Zack Britton - NYY - 502154
+Luis Cessa - NYY - 570666
+Aroldis Chapman - NYY - 547973
+Gerrit Cole - NYY - 543037
+Thairo Estrada - NYY - 642731
+Estevan Florial - NYY - 664314
+Mike Ford - NYY - 645801
+Clint Frazier - NYY - 640449
+Deivi Garcia - NYY - 665620
+Brett Gardner - NYY - 458731
+Luis Gil - NYY - 661563
+Chad Green - NYY - 643338
+J.A. Happ - NYY - 457918
+Ben Heller - NYY - 621294
+Aaron Hicks - NYY - 543305
+Kyle Higashioka - NYY - 543309
+Jonathan Holder - NYY - 656547
+Aaron Judge - NYY - 592450
+Tommy Kahnle - NYY - 592454
+Michael King - NYY - 650633
+Brooks Kriske - NYY - 621139
+DJ LeMahieu - NYY - 518934
+Jonathan Loaisiga - NYY - 642528
+Luis Medina - NYY - 665622
+Jordan Montgomery - NYY - 656756
+Nick Nelson - NYY - 656793
+Adam Ottavino - NYY - 493603
+James Paxton - NYY - 572020
+Gary Sanchez - NYY - 596142
+Luis Severino - NYY - 622663
+Giancarlo Stanton - NYY - 519317
+Masahiro Tanaka - NYY - 547888
+Mike Tauchman - NYY - 643565
+Gleyber Torres - NYY - 650402
+Gio Urshela - NYY - 570482
+Luke Voit - NYY - 572228
+Tyler Wade - NYY - 642180
+Miguel Yajure - NYY - 664337
+Brett Anderson - MIL - 474463
+Orlando Arcia - MIL - 606115
+Ray Black - MIL - 605143
+Ryan Braun - MIL - 460075
+Corbin Burnes - MIL - 669203
+Lorenzo Cain - MIL - 456715
+Alex Claudio - MIL - 592222
+J.P. Feyereisen - MIL - 656420
+David Freitas - MIL - 571679
+Ben Gamel - MIL - 592325
+Avisail Garcia - MIL - 541645
+Jedd Gyorko - MIL - 576397
+Josh Hader - MIL - 623352
+Ryon Healy - MIL - 592387
+Keston Hiura - MIL - 669374
+Brock Holt - MIL - 571788
+Adrian Houser - MIL - 605288
+Corey Knebel - MIL - 608349
+Eric Lauer - MIL - 641778
+Josh Lindblom - MIL - 458676
+Mark Mathias - MIL - 664029
+Omar Narvaez - MIL - 553882
+Jacob Nottingham - MIL - 641924
+Freddy Peralta - MIL - 642547
+Angel Perdomo - MIL - 622780
+David Phelps - MIL - 475479
+Manny Pina - MIL - 444489
+Corey Ray - MIL - 641999
+Ronny Rodriguez - MIL - 500135
+Justin Smoak - MIL - 475253
+Eric Sogard - MIL - 519299
+Trey Supak - MIL - 657022
+Brent Suter - MIL - 608718
+Tyrone Taylor - MIL - 621438
+Luis Urias - MIL - 649966
+Bobby Wahl - MIL - 592833
+Devin Williams - MIL - 642207
+Brandon Woodruff - MIL - 605540
+Eric Yardley - MIL - 642233
+Christian Yelich - MIL - 592885
+Sergio Alcantara - DET - 642727
+Tyler Alexander - DET - 641302
+Matthew Boyd - DET - 571510
+Beau Burrows - DET - 663366
+Miguel Cabrera - DET - 408234
+Daz Cameron - DET - 663662
+Jeimer Candelario - DET - 600869
+Anthony Castro - DET - 621593
+Harold Castro - DET - 605612
+Willi Castro - DET - 650489
+Jose Cisnero - DET - 542585
+C.J. Cron - DET - 543068
+Travis Demeritte - DET - 641513
+Buck Farmer - DET - 571656
+Kyle Funkhouser - DET - 608335
+Bryan Garcia - DET - 650530
+Rony Garcia - DET - 665621
+Niko Goodrum - DET - 592348
+Grayson Greiner - DET - 606988
+Eric Haase - DET - 606992
+Derek Hill - DET - 656537
+Joe Jimenez - DET - 641729
+JaCoby Jones - DET - 592444
+Dawel Lugo - DET - 608475
+Cameron Maybin - DET - 457727
+David McKay - DET - 641853
+Daniel Norris - DET - 596057
+Ivan Nova - DET - 467100
+Isaac Paredes - DET - 670623
+Franklin Perez - DET - 658530
+Victor Reyes - DET - 622682
+Jake Rogers - DET - 668670
+Austin Romine - DET - 519222
+Jonathan Schoop - DET - 570731
+John Schreiber - DET - 670167
+Gregory Soto - DET - 642397
+Christin Stewart - DET - 621514
+Troy Stokes Jr. - DET - 657011
+Spencer Turnbull - DET - 605513
+Jordan Zimmermann - DET - 519455
+Ehire Adrianza - MIN - 501303
+Jorge Alcala - MIN - 660896
+Luis Arraez - MIN - 650333
+Willians Astudillo - MIN - 553902
+Alex Avila - MIN - 488671
+Homer Bailey - MIN - 456701
+Jose Berrios - MIN - 621244
+Travis Blankenhorn - MIN - 663905
+Byron Buxton - MIN - 621439
+Jake Cave - MIN - 595909
+Gilberto Celestino - MIN - 665482
+Dakota Chalmers - MIN - 663793
+Tyler Clippard - MIN - 461325
+Nelson Cruz - MIN - 443558
+Randy Dobnak - MIN - 677976
+Josh Donaldson - MIN - 518626
+Tyler Duffey - MIN - 608648
+Jhoan Duran - MIN - 661395
+Mitch Garver - MIN - 641598
+Marwin Gonzalez - MIN - 503556
+Nick Gordon - MIN - 624503
+Rich Hill - MIN - 448179
+Max Kepler - MIN - 596146
+Jimmy Kerrigan - MIN - 677965
+Zack Littell - MIN - 641793
+Kenta Maeda - MIN - 628317
+Trevor May - MIN - 543507
+Jake Odorizzi - MIN - 543606
+Jorge Polanco - MIN - 593871
+Sean Poppen - MIN - 664092
+Taylor Rogers - MIN - 573124
+Sergio Romo - MIN - 489265
+Eddie Rosario - MIN - 592696
+Miguel Sano - MIN - 593934
+Devin Smeltzer - MIN - 656970
+Cody Stashak - MIN - 664054
+Lewis Thorpe - MIN - 626929
+LaMonte Wade Jr - MIN - 664774
+Matt Wisler - MIN - 605538
+Anthony Alford - TOR - 546990
+Chase Anderson - TOR - 502624
+Anthony Bass - TOR - 542914
+Bo Bichette - TOR - 666182
+Cavan Biggio - TOR - 624415
+Ryan Borucki - TOR - 621366
+Jonathan Davis - TOR - 641505
+Rafael Dolis - TOR - 503569
+Brandon Drury - TOR - 592273
+Santiago Espinal - TOR - 669289
+Derek Fisher - TOR - 605233
+Wilmer Font - TOR - 521655
+Sam Gaviglio - TOR - 543208
+Ken Giles - TOR - 571704
+Randal Grichuk - TOR - 545341
+Vladimir Guerrero Jr. - TOR - 665489
+Lourdes Gurriel Jr. - TOR - 666971
+Thomas Hatch - TOR - 641672
+Teoscar Hernandez - TOR - 606192
+Danny Jansen - TOR - 643376
+Anthony Kay - TOR - 641743
+Elvis Luciano - TOR - 672773
+Reese McGuire - TOR - 624512
+Billy McKinney - TOR - 641856
+Julian Merryweather - TOR - 657240
+Patrick Murphy - TOR - 641907
+Joe Panik - TOR - 605412
+Thomas Pannone - TOR - 623381
+Hector Perez - TOR - 660431
+Sean Reid-Foley - TOR - 656887
+Tanner Roark - TOR - 543699
+Jordan Romano - TOR - 605447
+Hyun-Jin Ryu - TOR - 547943
+Travis Shaw - TOR - 543768
+Matt Shoemaker - TOR - 533167
+Rowdy Tellez - TOR - 642133
+Trent Thornton - TOR - 663423
+Jacob Waguespack - TOR - 621097
+Shun Yamaguchi - TOR - 685493
+T.J. Zeuch - TOR - 643615
+Austin Allen - OAK - 664119
+Luis Barrera - OAK - 642456
+Franklin Barreto - OAK - 620439
+Chris Bassitt - OAK - 605135
+Paul Blackburn - OAK - 621112
+Skye Bolt - OAK - 621450
+Seth Brown - OAK - 664913
+Mark Canha - OAK - 592192
+Matt Chapman - OAK - 656305
+Khris Davis - OAK - 501981
+Jake Diekman - OAK - 518617
+Mike Fiers - OAK - 571666
+Dustin Fowler - OAK - 641583
+Daniel Gossett - OAK - 605254
+Robbie Grossman - OAK - 543257
+Jonah Heim - OAK - 641680
+Liam Hendriks - OAK - 521230
+Grant Holmes - OAK - 656550
+Daulton Jefferies - OAK - 641726
+James Kaprielian - OAK - 621076
+Tony Kemp - OAK - 643393
+Ramon Laureano - OAK - 657656
+Jesus Luzardo - OAK - 666200
+Vimael Machin - OAK - 605353
+Sean Manaea - OAK - 640455
+Jorge Mateo - OAK - 622761
+T.J. McFarland - OAK - 519008
+Frankie Montas - OAK - 593423
+Sean Murphy - OAK - 669221
+Sheldon Neuse - OAK - 641914
+Matt Olson - OAK - 621566
+Yusmeiro Petit - OAK - 433589
+Chad Pinder - OAK - 640461
+Stephen Piscotty - OAK - 572039
+A.J. Puk - OAK - 640462
+Marcus Semien - OAK - 543760
+Burch Smith - OAK - 572143
+Joakim Soria - OAK - 465657
+Lou Trivino - OAK - 642152
+J.B. Wendelken - OAK - 605525
+Ronald Acuna Jr. - ATL - 660670
+Ozzie Albies - ATL - 645277
+Johan Camargo - ATL - 622666
+William Contreras - ATL - 661388
+Travis d'Arnaud - ATL - 518595
+Tucker Davidson - ATL - 656353
+Grant Dayton - ATL - 594795
+Jasseel De La Cruz - ATL - 665600
+Adam Duvall - ATL - 594807
+Tyler Flowers - ATL - 452095
+Mike Foltynewicz - ATL - 592314
+Freddie Freeman - ATL - 518692
+Max Fried - ATL - 608331
+Shane Greene - ATL - 572888
+Cole Hamels - ATL - 430935
+Adeiny Hechavarria - ATL - 588751
+Ender Inciarte - ATL - 542255
+Alex Jackson - ATL - 656577
+Luke Jackson - ATL - 592426
+Nick Markakis - ATL - 455976
+Chris Martin - ATL - 455119
+Mark Melancon - ATL - 453343
+A.J. Minter - ATL - 621345
+Sean Newcomb - ATL - 656794
+Darren O'Day - ATL - 503285
+Marcell Ozuna - ATL - 542303
+Cristian Pache - ATL - 665506
+Philip Pfeifer - ATL - 547177
+Austin Riley - ATL - 663586
+Will Smith - ATL - 519293
+Chad Sobotka - ATL - 656977
+Mike Soroka - ATL - 647336
+Dansby Swanson - ATL - 621020
+Touki Toussaint - ATL - 657053
+Jeremy Walker - ATL - 668683
+Jacob Webb - ATL - 657097
+Patrick Weigel - ATL - 622256
+Bryse Wilson - ATL - 669060
+Kyle Wright - ATL - 657140
+Huascar Ynoa - ATL - 660623
+Chris Archer - PIT - 502042
+Josh Bell - PIT - 605137
+Steven Brault - PIT - 643230
+JT Brubaker - PIT - 664141
+Nick Burdi - PIT - 595897
+Blake Cederlind - PIT - 664977
+Will Craig - PIT - 643269
+Kyle Crick - PIT - 605195
+Oneil Cruz - PIT - 665833
+Jarrod Dyson - PIT - 502481
+Michael Feliz - PIT - 593140
+Adam Frazier - PIT - 624428
+Erik Gonzalez - PIT - 570481
+Geoff Hartlieb - PIT - 664129
+Ke'Bryan Hayes - PIT - 663647
+Guillermo Heredia - PIT - 628338
+Clay Holmes - PIT - 605280
+Sam Howard - PIT - 607572
+Keone Kela - PIT - 605309
+Mitch Keller - PIT - 656605
+Kevin Kramer - PIT - 596012
+Chad Kuhl - PIT - 641771
+Luke Maile - PIT - 571912
+Jason Martin - PIT - 641829
+Colin Moran - PIT - 592567
+Joe Musgrove - PIT - 605397
+Dovydas Neverauskas - PIT - 596720
+Kevin Newman - PIT - 621028
+Jose Osuna - PIT - 591741
+Gregory Polanco - PIT - 570256
+Cody Ponce - PIT - 664074
+Bryan Reynolds - PIT - 668804
+JT Riddle - PIT - 595375
+Yacksel Rios - PIT - 605441
+Richard Rodriguez - PIT - 593144
+Edgar Santana - PIT - 650828
+Jacob Stallings - PIT - 607732
+Chris Stratton - PIT - 608717
+Cole Tucker - PIT - 657061
+Trevor Williams - PIT - 592866
+Greg Allen - CLE - 656185
+Logan Allen - CLE - 663531
+Christian Arroyo - CLE - 624414
+Jake Bauers - CLE - 641343
+Shane Bieber - CLE - 669456
+Bobby Bradley - CLE - 656252
+Carlos Carrasco - CLE - 471911
+Yu Chang - CLE - 644374
+Adam Cimber - CLE - 643256
+Aaron Civale - CLE - 650644
+Emmanuel Clase - CLE - 661403
+Mike Clevinger - CLE - 605182
+Delino DeShields - CLE - 592261
+Brad Hand - CLE - 543272
+Sam Hentges - CLE - 656529
+Cesar Hernandez - CLE - 514917
+James Hoyt - CLE - 624586
+Daniel Johnson - CLE - 669288
+James Karinchak - CLE - 675916
+Sandy Leon - CLE - 506702
+Francisco Lindor - CLE - 596019
+Jordan Luplow - CLE - 656669
+Phil Maton - CLE - 664208
+Triston McKenzie - CLE - 663474
+Jean Carlos Mejia - CLE - 650496
+Oscar Mercado - CLE - 640458
+Scott Moss - CLE - 641900
+Tyler Naquin - CLE - 571980
+Oliver Perez - CLE - 424144
+Roberto Perez - CLE - 547379
+Zach Plesac - CLE - 668676
+Adam Plutko - CLE - 592644
+Jose Ramirez - CLE - 608070
+Franmil Reyes - CLE - 614177
+Jefry Rodriguez - CLE - 622446
+Carlos Santana - CLE - 467793
+Domingo Santana - CLE - 570267
+Nick Wittgren - CLE - 621295
+Hunter Wood - CLE - 621056
+Bradley Zimmer - CLE - 605548
+Albert Almora Jr. - CHC - 546991
+Adbert Alzolay - CHC - 640470
+Miguel Amaya - CHC - 665804
+Javier Baez - CHC - 595879
+David Bote - CHC - 623520
+Kris Bryant - CHC - 592178
+Victor Caratini - CHC - 605170
+Tyler Chatwood - CHC - 543022
+Willson Contreras - CHC - 575929
+Jharel Cotton - CHC - 605194
+Yu Darvish - CHC - 506433
+Daniel Descalso - CHC - 518614
+Robel Garcia - CHC - 596825
+Ian Happ - CHC - 664023
+Kyle Hendricks - CHC - 543294
+Jason Heyward - CHC - 518792
+Nico Hoerner - CHC - 663538
+Jeremy Jeffress - CHC - 502026
+Craig Kimbrel - CHC - 518886
+Jon Lester - CHC - 452657
+Dillon Maples - CHC - 596027
+Trevor Megill - CHC - 656730
+Tyson Miller - CHC - 668338
+Alec Mills - CHC - 621219
+James Norwood - CHC - 656803
+Jose Quintana - CHC - 500779
+Colin Rea - CHC - 607067
+Anthony Rizzo - CHC - 519203
+Manuel Rodriguez - CHC - 655889
+Kyle Ryan - CHC - 594986
+Casey Sadler - CHC - 594987
+Kyle Schwarber - CHC - 656941
+Zack Short - CHC - 670097
+Steven Souza Jr. - CHC - 519306
+Justin Steele - CHC - 657006
+Ryan Tepera - CHC - 572193
+Duane Underwood Jr. - CHC - 621249
+Rowan Wick - CHC - 592858
+Brad Wieck - CHC - 623364
+Dan Winkler - CHC - 595465

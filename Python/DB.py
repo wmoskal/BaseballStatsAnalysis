@@ -1,4 +1,5 @@
 import psycopg2
+from Parser import Parser
 
 class DB:
 
@@ -28,6 +29,7 @@ class DB:
 
     def execute(self, sql):
         self.cursor.execute(sql)
+        self.connection.commit()
 
     def close(self):
         if(self.connection):
@@ -57,6 +59,11 @@ class DB:
         rosterID = self.cursor.fetchone()
         return rosterID[0]
 
+    def getRosterIDs(self):
+        self.cursor.execute("SELECT team_name, team_id FROM roster_id_lookup")
+        rosterIDs = self.cursor.fetchall()
+        return rosterIDs
+
     def getRosterLookupURL(self):
         self.cursor.execute("SELECT url FROM lookup_urls WHERE id=1")
         lookupUrl = self.cursor.fetchone()[0]
@@ -72,8 +79,25 @@ class DB:
         lookupUrl = self.cursor.fetchone()[0]
         return lookupUrl
 
+    def insertBatter(self, batter):
+        insert = "INSERT INTO batters VALUES"
+        insert += batter.toDBString()
+        try:
+            self.execute(insert)
+        except Exception as e:
+            return e
 
-    
+    def insertBatters(self, batters):
+        id	
+        insert = "INSERT INTO batters (age,first_name,last_name,team_name,team_abbrieviation,player_id,position,games_played,at_bats,hits,runs,rbis,home_runs,walks,strikeouts,stolen_bases,batting_average,slg,on_base_percentage,ops,year,gidp,sac,num_pitches,total_bases,gidp_opp,hit_by_pitch,walkoffs,sacflys,caught_stealing,go_ao,ppa,intenional_walks,roe,ground_outs,babip,lob,xbh,doubles,tpa,triples,air_outs) VALUES"
+        for batter in batters:
+            insert += batter.toDBString() + ","
+        insert = insert[:-1]
+        try:
+            self.execute(insert)
+        except Exception as e:
+            return e
+
     ###### init methods ######
     def insertLookupUrls(self):
         '''Writes the 3 relevant lookup urls (hardcoded for now) into the lookup_urls table'''
